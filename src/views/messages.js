@@ -18,6 +18,10 @@ export default class Message extends Component {
         }, 1000)
     }
 
+    showDetial =(id) => {
+        this.props.history.push(`/home/message/${id}`)
+    }
+
     render() {
         return (
             <div>
@@ -25,7 +29,8 @@ export default class Message extends Component {
                     {
                         this.state.messages.map((item, index) => (
                             <li key={index}>
-                                <a href={`/home/message/${item.id}`}>{item.title}</a>
+                                <NavLink to={`/home/message/${item.id}`}>{item.title}</NavLink>
+                                <button onClick={() => {this.showDetial(item.id)}}>push查看</button>
                             </li>
                         ))
                     }
