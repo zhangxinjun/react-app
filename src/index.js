@@ -1,10 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom"
+import React from 'react'
+import ReactDom from 'react-dom'
 
-import App from "./components/demo";
 
-const name = { name: '数时', age: 19 }
-ReactDOM.render((
-  <BrowserRouter><App {...name} /></BrowserRouter>
-), document.getElementById("root"))
+// React.StrictMode检查其中的所有组件的书写是否合理，是否使用了一些不推荐的API
+ReactDom.render(<React.StrictMode></React.StrictMode>, document.getElementById('root'))
