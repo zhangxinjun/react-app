@@ -16,11 +16,18 @@ export default class Message extends Component {
       <ul>
         {message.map(item => {
           // 路由组件传递params参数
-          return <li> <Link to={`/home/message/detail/${item.id}/${item.title}`} key={item.id}>{item.title}</Link></li>
+          // return <li key={item.id}> <Link to={`/home/message/detail/${item.id}/${item.title}`} >{item.title}</Link></li>
+          // 路由传参search传参
+          return <li key={item.id}> <Link to={`/home/message/detail/?id=${item.id}&title=${item.title}`} >{item.title}</Link></li>
         })}
         <hr />
         {/* 上边传的那些这个位置必须指定 */}
-        <Route path="/home/message/detail/:id/:title" component={Detail}></Route>
+        {/* <Route path="/home/message/detail/:id/:title" component={Detail}></Route> */}
+
+
+        {/* search传参不需要指定，正常注册路由即可 */}
+        <Route path="/home/message/detail" component={Detail}></Route>
+
       </ul>
     )
   }
