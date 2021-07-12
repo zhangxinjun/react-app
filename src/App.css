@@ -135,3 +135,13 @@ li:last-child {
   float     : right;
   margin-top: 5px;
 }
+
+.active {
+  background-color: #da4f49;
+  color           : #fff;
+  font-size       : 30px;
+}
+
+.active-name {
+  background-color: aqua;
+}

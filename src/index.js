@@ -1,6 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/app/app";
+import React from 'react'
+import ReactDom from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
 
-
-ReactDOM.render(<App />,document.getElementById("root"))
+// 所有的路由都必须包裹在BrowserRouter下做统一管理
+ReactDom.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'))
