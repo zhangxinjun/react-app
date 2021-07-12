@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // qs库不需要单独下载，react已经自带的有了
-import qs from 'querystring'
+// import qs from 'querystring'
 
 export default class Detail extends Component {
   render () {
@@ -17,6 +17,11 @@ export default class Detail extends Component {
     const result = qs.parse(search)
     console.log(result);
 */
+    /**
+     * 路由传参接受status参数
+     * const {id, title } = this.props.location.state
+     */
+    console.log(this.props);
     return (
       <div>
         <ul>
