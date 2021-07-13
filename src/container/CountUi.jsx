@@ -10,13 +10,15 @@ function mapStateToProps (state) {
   }
 }
 // 返回一个对象，该对象的key就是传递给ui组件的key，方法就是操作props的value的状态的方法， 该函数的返回值用来操作状态
-function mapDispatchToProps (dispatch) {
-  return {
-    mapAdd: (value) => {
-      dispatch(addAction(value))
-    }
-  }
-}
+// function mapDispatchToProps (dispatch) {
+//   return {
+//     mapAdd: (value) => {
+//       dispatch(addAction(value))
+//     }
+//   }
+// }
 // 使用connect()()创建并暴露一个connect容器组件
-export default connect(mapStateToProps, mapDispatchToProps)(Count)
+// export default connect(mapStateToProps, mapDispatchToProps)(Count)
+// mapDispatchToProps可以直接写成一个对象，react-redux内部会自动执行dispatch动作
+export default connect(mapStateToProps, { mapAdd: addAction })(Count)
 
