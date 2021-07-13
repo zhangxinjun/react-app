@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import store from '../../redux/store'
+import { addAction, addAsyncAction } from '../../redux/num_action'
 
 export default class Count extends Component {
   // 由于redux中数据的变化并不会引起页面的更新
@@ -12,7 +13,11 @@ export default class Count extends Component {
   add = () => {
     const { value } = this.selectValue
     // 点击的时候分发对应的action
-    store.dispatch({ type: 'add', data: +value })
+    store.dispatch(addAction(+value))
+  }
+  addAsync = () => {
+    const { value } = this.selectValue
+    store.dispatch(addAsyncAction(+value, 1000))
   }
   render () {
     return (
@@ -24,7 +29,7 @@ export default class Count extends Component {
           <option value="3">3</option>
         </select>
         <button onClick={this.add}>+</button>
-        <button>-</button>
+        <button onClick={this.addAsync}>异步加</button>
         <button>奇数加</button>
       </div>
     )
