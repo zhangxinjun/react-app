@@ -1,13 +1,18 @@
-import React, { Component } from 'react'
-import 'antd/dist/antd.css';
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+
+import Login from './pages/Login'
+import Layout from './pages/Layout/'
 
 
-export default class App extends Component {
-  render () {
-    return (
-      <div>
-        app
-      </div>
-    )
-  }
+export default function App () {
+  return (
+    <div>
+      <Switch>
+        <Redirect exact from='/' to='/login'></Redirect>
+        <Route path='/login' component={Login}></Route>
+        <Route path='/home' component={Layout}></Route>
+      </Switch>
+    </div>
+  )
 }
