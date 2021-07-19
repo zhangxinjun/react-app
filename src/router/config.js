@@ -17,20 +17,46 @@ export const router = [
     path: '/system/user',
     name: 'System',
     title: '系统设置',
-    icon: 'SettingOutlined ',
+    icon: 'SettingOutlined',
     component: () => import('../pages/System/User/index'),
     children: [
       {
         path: '/system/user',
         name: 'User',
         title: '人员管理',
+        icon: 'SettingOutlined',
         component: () => import('../pages/System/User/index')
       },
       {
         path: '/system/role',
         name: 'Role',
         title: '角色管理',
+        icon: 'SettingOutlined',
         component: () => import('../pages/System/Role/index')
+      },
+
+    ]
+  },
+  {
+    path: '/order/list',
+    name: 'Order',
+    title: '订单管理',
+    icon: 'SettingOutlined',
+    component: () => import('../pages/Order/List'),
+    children: [
+      {
+        path: '/order/list',
+        name: 'Order',
+        title: '人员管理',
+        icon: 'SettingOutlined',
+        component: () => import('../pages/Order/List')
+      },
+      {
+        path: '/order/detail',
+        name: 'Detail',
+        title: '角色管理',
+        icon: 'SettingOutlined',
+        component: () => import('../pages/Order/Detail')
       },
 
     ]

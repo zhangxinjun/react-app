@@ -13,6 +13,7 @@ export default function Login (props) {
 
   const login = (value) => {
     setTimeout(() => {
+      sessionStorage.setItem('user', 'demo')
       props.history.push('/home')
     }, 500)
   }

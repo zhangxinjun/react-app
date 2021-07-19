@@ -1,11 +1,12 @@
 import React, { Suspense, lazy } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Layout } from 'antd';
 import { router } from '../../router/config'
 
 import Header from '../Header'
 import Slide from '../Slide'
 import Crumbs from '../Crumbs'
+import Error from '../Error'
 const { Content } = Layout;
 
 
@@ -32,6 +33,8 @@ export default function App () {
                 {
                   router.map((el, index) => <Route key={index} path={el.path} component={lazy(el.component)} ></Route>)
                 }
+                {/* <Route path="/error" component={Error}></Route>
+                <Redirect to='/error'></Redirect> */}
               </Switch>
             </Suspense>
 
