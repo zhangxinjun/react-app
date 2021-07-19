@@ -10,7 +10,6 @@ import Error from '../Error'
 const { Content } = Layout;
 
 
-
 export default function App () {
   return (
     <div>
@@ -31,10 +30,18 @@ export default function App () {
             <Suspense fallback={<div>loading...</div>}>
               <Switch>
                 {
-                  router.map((el, index) => <Route key={index} path={el.path} component={lazy(el.component)} ></Route>)
+                  router.map((el, index) => {
+                    if (el.children && el.children.length > 0) {
+                      return el.children.map((item) => {
+                        return <Route key={index} path={item.path} component={lazy(item.component)} ></Route>
+                      })
+                    } else {
+                      return <Route key={index} path={el.path} component={lazy(el.component)} ></Route>
+                    }
+                  })
                 }
-                {/* <Route path="/error" component={Error}></Route>
-                <Redirect to='/error'></Redirect> */}
+                <Route path="/error" component={Error}></Route>
+                <Redirect to='/error'></Redirect>
               </Switch>
             </Suspense>
 

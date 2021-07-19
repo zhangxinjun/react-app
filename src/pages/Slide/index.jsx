@@ -10,7 +10,7 @@ const { Sider } = Layout;
 //生成icon元素标签
 const _iconConvert = (type) => React.createElement(Icon[type])
 
-// 生成以及标签
+// 生成一级标签
 const renderMenu = ({ title, path, icon }) => {
   return (
     <Menu.Item key={path} icon={_iconConvert(icon)}>
@@ -41,22 +41,37 @@ function Slide (props) {
   useEffect(() => {
     const r = props.location.pathname
     setSelectKeys([r])
+    const a = router.map(el => {
+      if (el.path === r) {
+        return el.path
+      }
+    })
+    setOpenKeys(a)
   }, [props])
 
-  const onOpenChange = (keys) => {
-    console.log(keys);
-    const k = keys
-    setOpenKeys([])
-    setOpenKeys(keys)
-  }
-  // const menuSelect = ({ item, key }) => { setDefauleKeys([key]) }
+  const rootSubmenuKeys = router.filter(el => {
+    return el.children && el.children.length > 0
+  }).map((item => {
+    return item.path
+  }))
+
+
+  const onOpenChange = keys => {
+    const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
+
 
   return (
     <div>
       <Sider trigger={null} collapsible collapsed={collapsed} style={{ height: '100%' }}>
         <div className="logo" style={{ color: '#fff', textAlign: 'center', height: '62px', lineHeight: '62px' }}>这是log</div>
 
-        <Menu theme="dark" selectedKeys={selectKeys} defaultOpenKeys={openKeys} onOpenChange={onOpenChange} mode="inline" >
+        <Menu theme="dark" selectedKeys={selectKeys} openKeys={openKeys} onOpenChange={onOpenChange} mode="inline" >
           {
             router.map(firstItem => {
               return firstItem.children && firstItem.children.length > 0 ? renderSubMnenu(firstItem) : renderMenu(firstItem)
