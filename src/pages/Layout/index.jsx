@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { Layout } from 'antd';
+import { Layout, Space } from 'antd';
 import { router } from '../../router/config'
 
 import Header from '../Header'
@@ -10,7 +10,7 @@ import Error from '../Error'
 const { Content } = Layout;
 
 
-export default function App () {
+function App () {
   return (
     <div>
 
@@ -51,3 +51,4 @@ export default function App () {
     </div>
   )
 }
+export default App

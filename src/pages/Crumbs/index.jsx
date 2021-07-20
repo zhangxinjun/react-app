@@ -1,15 +1,31 @@
-import React from 'react'
-import { Breadcrumb } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Tag } from 'antd';
+import { deleteCrumAction } from '../../redux/action/crumbAction'
 
 
-export default function index () {
+function Crumbs (props) {
+  const [tagList, setTagList] = useState([])
+  useEffect(() => {
+    const list = props.crumList.crumbRedux
+    setTagList([...list])
+  }, [props])
+
+  const deleteTag = (item) => {
+    return () => {
+      props.deleteCrumAction(item)
+    }
+  }
+
   return (
-    <div>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
+    <div style={{ padding: '20px' }}>
+      {
+        tagList.map((el, index) => {
+          return <Tag onClose={deleteTag(el)} closable key={index}><Link to={el}>{el}</Link></Tag>
+        })
+      }
     </div>
   )
 }
+export default connect(state => ({ crumList: state }), { deleteCrumAction })(Crumbs)

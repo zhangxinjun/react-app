@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, withRouter } from "react-router-dom";
+import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd';
 import * as Icon from '@ant-design/icons'
 import { router } from '../../router/config'
+import { crumbAction } from '../../redux/action/crumbAction'
+// import filterRouterItem from './routeFilter';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -41,13 +44,17 @@ function Slide (props) {
   useEffect(() => {
     const r = props.location.pathname
     setSelectKeys([r])
-    const a = router.map(el => {
+    const a = router.filter(el => {
       if (el.path === r) {
         return el.path
       }
     })
+    // const a = filterRouterItem(router, r)
+    // // console.log(a, '============');
     setOpenKeys(a)
+    props.addCrumb(r)
   }, [props])
+
 
   const rootSubmenuKeys = router.filter(el => {
     return el.children && el.children.length > 0
@@ -65,13 +72,18 @@ function Slide (props) {
     }
   };
 
+  const onSelectMenu = ({ key }) => {
+    // const routerItem = filterRouterItem(router, key)
+    // console.log(routerItem, '00000');
+    props.addCrumb(key)
+  }
 
   return (
     <div>
       <Sider trigger={null} collapsible collapsed={collapsed} style={{ height: '100%' }}>
         <div className="logo" style={{ color: '#fff', textAlign: 'center', height: '62px', lineHeight: '62px' }}>这是log</div>
 
-        <Menu theme="dark" selectedKeys={selectKeys} openKeys={openKeys} onOpenChange={onOpenChange} mode="inline" >
+        <Menu theme="dark" selectedKeys={selectKeys} openKeys={openKeys} onOpenChange={onOpenChange} onSelect={onSelectMenu} mode="inline" >
           {
             router.map(firstItem => {
               return firstItem.children && firstItem.children.length > 0 ? renderSubMnenu(firstItem) : renderMenu(firstItem)
@@ -82,4 +94,6 @@ function Slide (props) {
     </div>
   )
 }
-export default withRouter(Slide)
+
+
+export default connect(state => ({ crumList: state }), { addCrumb: crumbAction })(withRouter(Slide))
