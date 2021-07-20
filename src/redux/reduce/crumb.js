@@ -5,15 +5,15 @@ export default function crumbRedux (preState = initState, action) {
   switch (type) {
     case ADDCRUMB:
       if (preState.indexOf(data) === -1) {
-        return preState.concat([data])
+        const cruState = preState.concat([data])
+        return cruState
       } else {
         return preState
       }
     case DELETECRUMB:
-      preState.splice(preState.indexOf(data), 1)
-      console.log('pre', preState);
-
-      return preState
+      const curState = preState
+      curState.splice(preState.indexOf(data), 1)
+      return curState
     default:
       return preState
   }

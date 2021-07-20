@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Tag } from 'antd';
 import { deleteCrumAction } from '../../redux/action/crumbAction'
+import store from '../../redux/store'
 
 
-function Crumbs (props) {
-  const [tagList, setTagList] = useState([])
-  useEffect(() => {
-    const list = props.crumList.crumbRedux
-    setTagList([...list])
-  }, [props])
-
-  const deleteTag = (item) => {
-    return () => {
-      props.deleteCrumAction(item)
+class Crumbs extends Component {
+  state = {
+    tagList: []
+  }
+  componentDidMount () {
+    const list = store.getState().crumbRedux
+    console.log(list, 'list');
+    this.setState({ tagList: list })
+  }
+  deleteTag = (item) => {
+    return (e) => {
+      e.preventDefault()
+      // props.deleteCrumAction(item)
     }
   }
-
-  return (
-    <div style={{ padding: '20px' }}>
-      {
-        tagList.map((el, index) => {
-          return <Tag onClose={deleteTag(el)} closable key={index}><Link to={el}>{el}</Link></Tag>
-        })
-      }
-    </div>
-  )
+  render () {
+    const { tagList } = this.state
+    return (
+      <div style={{ padding: '20px' }}>
+        {
+          tagList.map((el, index) => {
+            return <Tag onClose={this.deleteTag(el)} closable key={index}><Link to={el}>{el}</Link></Tag>
+          })
+        }
+      </div>
+    )
+  }
 }
 export default connect(state => ({ crumList: state }), { deleteCrumAction })(Crumbs)
+
