@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Tag } from 'antd';
 import { deleteCrumAction } from '../../redux/action/crumbAction'
 
+import store from '../../redux/store'
+
 
 function Crumbs (props) {
   const [tagList, setTagList] = useState([])
   useEffect(() => {
-    const list = props.crumList.crumbRedux
-    console.log(list, '这是list');
+    console.log(store.getState());
+    const list = store.getState().crumbRedux
     setTagList(list)
-  }, [props])
+  }, [])
 
   const deleteTag = (item) => {
-    return () => {
+    return (e) => {
+      e.preventDefault()
       props.deleteCrumAction(item)
     }
   }
+
   return (
     <div style={{ padding: '20px' }}>
       {
@@ -27,7 +31,5 @@ function Crumbs (props) {
       }
     </div>
   )
-
 }
 export default connect(state => ({ crumList: state }), { deleteCrumAction })(Crumbs)
-
