@@ -10,10 +10,10 @@ export default function crumbRedux (preState = initState, action) {
         return preState
       }
     case DELETECRUMB:
+      console.log("减少");
       preState.splice(preState.indexOf(data), 1)
-      console.log('pre', preState);
-
-      return preState
+      const a = preState
+      return a
     default:
       return preState
   }

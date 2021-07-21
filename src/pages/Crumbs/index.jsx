@@ -9,7 +9,8 @@ function Crumbs (props) {
   const [tagList, setTagList] = useState([])
   useEffect(() => {
     const list = props.crumList.crumbRedux
-    setTagList([...list])
+    console.log(list, '这是list');
+    setTagList(list)
   }, [props])
 
   const deleteTag = (item) => {
