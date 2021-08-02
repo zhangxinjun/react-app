@@ -18,6 +18,7 @@ export const router = [
     name: 'System',
     title: '系统设置',
     icon: 'SettingOutlined',
+    redirect: '/system/user',
     component: () => import('../pages/System/User/index'),
     children: [
       {
@@ -42,6 +43,7 @@ export const router = [
     name: 'Order',
     title: '订单管理',
     icon: 'SettingOutlined',
+    redirect: '/order/list',
     component: () => import('../pages/Order/List'),
     children: [
       {

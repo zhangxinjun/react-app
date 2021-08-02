@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
+import PubSub from 'pubsub-js';
 import { Layout, Menu } from 'antd';
 import * as Icon from '@ant-design/icons'
 import { router } from '../../router/config'
@@ -49,8 +50,6 @@ function Slide (props) {
         return el.path
       }
     })
-    // const a = filterRouterItem(router, r)
-    // // console.log(a, '============');
     setOpenKeys(a)
     props.addCrumb(r)
   }, [props])
@@ -71,11 +70,27 @@ function Slide (props) {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
-
+  const selsectList = JSON.parse(sessionStorage.getItem('selsectList')) || []
   const onSelectMenu = ({ key }) => {
-    // const routerItem = filterRouterItem(router, key)
-    // console.log(routerItem, '00000');
-    props.addCrumb(key)
+    let selectItem = null
+    router.forEach(el => {
+      if (el.children && Array.isArray(el.children)) {
+        el.children.forEach(item => {
+          if (item.path === key) {
+            selectItem = item
+          }
+        })
+      } else if (el.path === key) {
+        selectItem = el
+      }
+    })
+    if (!selsectList.find(obj => obj.path === selectItem.path)) {
+      selsectList.push(selectItem)
+    }
+    console.log('selsectList', selsectList);
+    PubSub.publish('selsectList', selsectList)
+    // props.addCrumb(key)
+    sessionStorage.setItem('selsectList', JSON.stringify(selsectList))
   }
 
   return (
